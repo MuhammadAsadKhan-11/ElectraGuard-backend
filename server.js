@@ -7,15 +7,17 @@ dotenv.config();
 
 const app = express();
 
+// ✅ Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Health check route
+// ✅ Health Check
 app.get("/", (req, res) => {
   res.send("Gemini backend is running 🚀");
 });
 
-// Chat route
+// ✅ Chat Route
 app.post("/chat", async (req, res) => {
   try {
     const { message } = req.body;
@@ -38,7 +40,7 @@ app.post("/chat", async (req, res) => {
     const reply =
       response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
-    res.json({ reply });
+    res.json({ reply: reply || "No response received." });
 
   } catch (error) {
     console.error(error.response?.data || error.message);
