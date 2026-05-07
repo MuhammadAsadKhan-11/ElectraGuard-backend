@@ -8,7 +8,7 @@ dotenv.config();
 const app = express();
 
 // ✅ Middleware
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -27,7 +27,7 @@ app.post("/chat", async (req, res) => {
     }
 
     const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
       {
         contents: [
           {
