@@ -1,33 +1,33 @@
-import './KeepAlive.js'; // server ko alive rakhne ke liye
 import express from "express";
 import axios from "axios";
 import cors from "cors";
 import dotenv from "dotenv";
 import rateLimit from "express-rate-limit";
+import './keepAlive.js';
 
 dotenv.config();
 
 const app = express();
 
-// ✅ Rate Limiter — ek IP se max 30 requests per minute
+// ✅ FIX 1: Render proxy ke liye zaruri
+app.set('trust proxy', 1);
+
+// ✅ Rate Limiter
 const limiter = rateLimit({
   windowMs: 60 * 1000,
   max: 30,
   message: { error: "Too many requests. Please wait." }
 });
 
-// ✅ Middleware
 app.use(cors({ origin: '*' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/chat", limiter); // sirf chat route pe lagao
+app.use("/chat", limiter);
 
-// ✅ Health Check
 app.get("/", (req, res) => {
   res.send("Gemini backend is running 🚀");
 });
 
-// ✅ Chat Route
 app.post("/chat", async (req, res) => {
   try {
     const { message } = req.body;
@@ -40,12 +40,13 @@ app.post("/chat", async (req, res) => {
       return res.status(400).json({ error: "Message too long." });
     }
 
+    // ✅ FIX 2: v1beta ki jagah v1 use karo, aur updated model name
     const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
       {
         contents: [{ parts: [{ text: message }] }],
       },
-      { timeout: 30000 } // 30 second timeout
+      { timeout: 30000 }
     );
 
     const reply = response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
