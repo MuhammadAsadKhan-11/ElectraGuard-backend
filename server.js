@@ -9,10 +9,10 @@ dotenv.config();
 
 const app = express();
 
-// ✅ FIX 1: Render proxy ke liye zaruri
+//render proxy 
 app.set('trust proxy', 1);
 
-// ✅ Rate Limiter
+//  Rate Limiter
 const limiter = rateLimit({
   windowMs: 60 * 1000,
   max: 30,
@@ -40,7 +40,7 @@ app.post("/chat", async (req, res) => {
       return res.status(400).json({ error: "Message too long." });
     }
 
-    // ✅ FIX 2: v1beta ki jagah v1 use karo, aur updated model name
+    //  v1beta ki jagah v1 use karo, aur updated model name
     const response = await axios.post(
       `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
       {
