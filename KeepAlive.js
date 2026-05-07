@@ -1,6 +1,6 @@
 // keepAlive.js
 
-const BACKEND_URL = 'https://tumhara-backend.onrender.com'; // ← apna Render URL lagao
+const BACKEND_URL = 'https://electraguard-backend.onrender.com'; // ← apna Render URL lagao
 
 const pingServer = async () => {
   try {
