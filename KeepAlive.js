@@ -1,6 +1,6 @@
 // keepAlive.js
 
-const BACKEND_URL = 'https://electraguard-backend.onrender.com'; // ← apna Render URL lagao
+const BACKEND_URL = 'https://electraguard-backend.onrender.com'; // ← my render url
 
 const pingServer = async () => {
   try {
@@ -11,7 +11,7 @@ const pingServer = async () => {
   }
 };
 
-// Har 10 minute mein ping
+// after every 10 min ping
 setInterval(pingServer, 10 * 60 * 1000);
 
 console.log('🔄 Keep-alive started');
