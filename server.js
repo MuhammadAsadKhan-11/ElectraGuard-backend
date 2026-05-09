@@ -50,7 +50,7 @@ app.post("/chat", async (req, res) => {
 
     // ✅ Model: gemini-3.0-flash-preview → gemini-1.5-flash
     const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
       {
         contents: [{ parts: [{ text: message }] }],
       },
