@@ -15,7 +15,7 @@ app.set('trust proxy', 1);
 //  Rate Limiter
 const limiter = rateLimit({
   windowMs: 60 * 1000,
-  max: 15, // Gemini free tier = 15 RPM, isliye 15 rakho
+  max: 100, // 100 requests per minute
   message: { error: "Too many requests. Please wait." }
 });
 
