@@ -1,6 +1,6 @@
 // keepAlive.js
 
-const BACKEND_URL = 'https://electraguard-backend.onrender.com'; // ← my render url
+const BACKEND_URL = 'https://electraguard-backend-1.onrender.com'; // ← my render url
 
 const pingServer = async () => {
   try {
